@@ -211,7 +211,7 @@ th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06
 /* ===== CONFIG ===== */
 const TESTTYPE = "post";
 /* Posttest window (Philippine time). Change these two lines to move it. */
-const POST_OPEN  = new Date("2026-11-25T06:00:00+08:00").getTime();
+const POST_OPEN  = new Date("2026-11-25T10:00:00+08:00").getTime();
 const POST_CLOSE = new Date("2026-11-25T12:00:00+08:00").getTime();
 const PREVIEW = /[?&]preview=1/.test(location.search);   // facilitator test: add ?preview=1 to the link   // "pre" = Pretest, "post" = Posttest
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7kwqgr7QzbdMNjiS5VM-6VPnPekF9XQzPKJGKaAvoCxqqm5yXGiNmldOuYjlSJK4/exec";   // Paste your deployed Google Apps Script Web App URL here (see Code.gs)
@@ -324,7 +324,7 @@ function gateState(){const n=Date.now();if(PREVIEW)return "open";if(n<POST_OPEN)
 function updateGate(){
   const g=gateState(),b=$("startBtn"),m=$("gate");
   if(g==="open"){m.textContent=PREVIEW?"Preview mode: the posttest is open for testing.":"The posttest is open now.";m.style.color="#12a150";b.disabled=false}
-  else if(g==="early"){m.textContent="The posttest opens on Day 3 (November 25, 2026) at 6:00 AM. Please come back then.";m.style.color="#b36b00";b.disabled=true}
+  else if(g==="early"){m.textContent="The posttest opens on Day 3 (November 25, 2026) at 10:00 AM. Please come back then.";m.style.color="#b36b00";b.disabled=true}
   else{m.textContent="The posttest window has closed. Please see your facilitator.";m.style.color="#ef476f";b.disabled=true}
 }
 updateGate();setInterval(updateGate,30000);

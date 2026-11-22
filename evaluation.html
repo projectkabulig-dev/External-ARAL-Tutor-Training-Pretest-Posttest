@@ -322,7 +322,7 @@ $("evGo").onclick=()=>{
   const vals=QS.map((q,i)=>rate[i]);
   const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
   lastPayload={action:"eval",ts:new Date().toISOString(),day:day,name:who.name,district:who.dist,
-    ratings:vals.join(""),keys:QS.map(q=>q.k).join(","),oneword:ow,best:$("best").value.trim(),help:$("help").value.trim(),sugg:$("sugg").value.trim(),
+    scores:vals,labels:QS.map(q=>q.t),oneword:ow,best:$("best").value.trim(),help:$("help").value.trim(),sugg:$("sugg").value.trim(),
     ua:navigator.userAgent.slice(0,120)};
   const a=ANIMALS[Math.min(4,Math.max(0,Math.round(avg)-1))];
   $("doneAn").textContent=a.e;
@@ -361,14 +361,14 @@ function drawDash(all){
   const rows=all.filter(r=>!fd||Number(r.day)===fd);
   if(!rows.length){$("dash").innerHTML='<div class="note">No evaluations yet.</div>';return}
   const n=rows.length;
-  const tot=rows.map(r=>{const v=String(r.ratings).split("").map(Number);return v.reduce((a,b)=>a+b,0)/v.length});
+  const tot=rows.map(r=>{const v=r.scores;return v.reduce((a,b)=>a+b,0)/v.length});
   const avg=tot.reduce((a,b)=>a+b,0)/n;
   const an=ANIMALS[Math.min(4,Math.max(0,Math.round(avg)-1))];
   let h='<div class="stat"><div><b>'+n+'</b>Evaluations</div><div><b>'+an.e+' '+avg.toFixed(2)+'</b>Overall (out of 5)</div></div>';
   // per sentence
-  const text={};Object.values(TOPICS).forEach(a=>a.forEach(q=>{if(!text[q.k])text[q.k]=q.t}));COMMON.forEach(q=>text[q.k]=q.t);
+  const text={};
   const agg={};
-  rows.forEach(r=>{const ks=String(r.keys).split(",");String(r.ratings).split("").forEach((c,i)=>{const k=ks[i];(agg[k]=agg[k]||[]).push(Number(c))})});
+  rows.forEach(r=>{r.scores.forEach((c,i)=>{const k=r.labels[i];(agg[k]=agg[k]||[]).push(Number(c))})});
   h+='<h2 style="margin-top:16px">By sentence</h2>';
   Object.keys(agg).forEach(k=>{
     const a=agg[k],m=a.reduce((x,y)=>x+y,0)/a.length,an2=ANIMALS[Math.min(4,Math.max(0,Math.round(m)-1))];

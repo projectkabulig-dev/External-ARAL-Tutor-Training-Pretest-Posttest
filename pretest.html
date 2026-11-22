@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARAL External Tutors Pretest | SDO Romblon</title>
+<style>
+:root{
+  --ink:#10243e; --muted:#5b6b82; --line:#e3e9f2; --bg:#f3f6fb; --card:#ffffff;
+  --blue:#1f5eff; --teal:#00b3a4; --gold:#ffb703; --rose:#ef476f; --green:#12a150;
+  --grad:linear-gradient(135deg,#1f5eff 0%,#6a3df0 55%,#00b3a4 120%);
+  --rb:linear-gradient(90deg,#ef476f,#ff9f1c,#ffd60a,#06d6a0,#118ab2,#7b5cff);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.topbar:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;background:var(--rb)}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:10px 16px}
+.home{display:inline-flex;align-items:center;gap:8px;border:0;background:var(--grad);color:#fff;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer;font-size:14px;box-shadow:0 4px 12px rgba(31,94,255,.3)}
+.home svg{width:18px;height:18px}
+.brand{font-weight:700;font-size:14px;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:18px;padding:6px 14px;border-radius:999px;background:#eaf0ff;color:var(--blue);display:none}
+.timer.warn{background:#fff1d6;color:#b36b00}
+.timer.danger{background:#ffe3ea;color:var(--rose);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.55}}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px}
+.page{display:none;animation:fade .35s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{background:var(--grad);color:#fff;border-radius:24px;padding:34px 26px;box-shadow:0 18px 40px rgba(31,94,255,.28);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero small{letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:700}
+.hero h1{margin:8px 0 6px;font-size:30px;line-height:1.15}
+.hero p{margin:0;opacity:.92}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:18px;box-shadow:0 6px 22px rgba(16,36,62,.06)}
+.card h2{margin:0 0 12px;font-size:19px}
+.steps{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.step{display:flex;gap:12px;align-items:flex-start;background:#f7f9fe;border:1px solid var(--line);border-radius:16px;padding:14px}
+.step:nth-child(1) b.n{background:#ef476f}.step:nth-child(2) b.n{background:#ff9f1c}.step:nth-child(3) b.n{background:#06d6a0}.step:nth-child(4) b.n{background:#7b5cff}
+.step b.n{flex:0 0 34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:15px}
+.step span{font-size:14px;color:#33465f}
+.rules{margin:0;padding-left:20px;color:#33465f;font-size:14.5px}
+.rules li{margin:6px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{font-size:12.5px;font-weight:700;padding:5px 11px;border-radius:999px;background:#eef3ff;color:var(--blue)}
+.chip:nth-child(1){background:#ffe3ea;color:#c2264b}.chip:nth-child(2){background:#fff0d9;color:#b36000}.chip:nth-child(3){background:#fff8c9;color:#8a7000}.chip:nth-child(4){background:#d9f7ec;color:#04855f}.chip:nth-child(5){background:#dff1fa;color:#0b6a92}.chip:nth-child(6){background:#ece6ff;color:#5b3fd1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:13px 22px;font-weight:800;font-size:16px;cursor:pointer;background:var(--grad);color:#fff;box-shadow:0 10px 22px rgba(31,94,255,.28);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:#fff;color:var(--blue);border:2px solid #cfdcff;box-shadow:none}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+input,select{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:12px;font-size:16px;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(31,94,255,.12)}
+.err{color:var(--rose);font-weight:700;font-size:14px;margin-top:10px;min-height:20px}
+.progress{height:10px;background:#e6ecf7;border-radius:99px;overflow:hidden;margin:2px 0 14px}
+.progress i{display:block;height:100%;width:0;background:var(--rb);transition:width .3s}
+.qmeta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:700}
+.skill{padding:4px 10px;border-radius:999px;background:#e6fbf8;color:#007f74}
+.qtext{font-size:19px;font-weight:600;margin:12px 0 16px;line-height:1.45}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:16px;padding:13px 14px;margin:10px 0;cursor:pointer;font-size:16px;color:var(--ink);transition:.15s}
+.opt:hover{border-color:#9db9ff;background:#f6f9ff}
+.opt .l{flex:0 0 32px;height:32px;border-radius:50%;background:#eef3ff;color:var(--blue);display:grid;place-items:center;font-weight:800}
+.opt.sel{border-color:var(--blue);background:#eef3ff}
+.opt.sel .l{background:var(--blue);color:#fff}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.dot{width:30px;height:30px;border-radius:9px;border:2px solid var(--line);background:#fff;font-size:12px;font-weight:800;cursor:pointer;color:var(--muted)}
+.dot.done{background:#e8f6ee;border-color:#a8dfc0;color:var(--green)}
+.dot.cur{border-color:var(--blue);color:var(--blue)}
+.score{text-align:center}
+.score .big{font-size:64px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.bars{margin-top:14px}
+.bar{display:grid;grid-template-columns:150px 1fr 56px;gap:10px;align-items:center;margin:9px 0;font-size:14px;font-weight:700}
+.bar .t{height:14px;border-radius:99px;background:#e6ecf7;overflow:hidden}
+.bar .t i{display:block;height:100%;background:var(--rb)}
+.rev{border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0;background:#fff}
+.rev.ok{border-left:6px solid var(--green)}
+.rev.bad{border-left:6px solid var(--rose)}
+.rev h4{margin:0 0 6px;font-size:15px}
+.rev p{margin:4px 0;font-size:14px;color:#33465f}
+.tag{font-size:12px;color:var(--muted)}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:12px 0}
+.stat div{background:#f5f8ff;border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
+.stat b{display:block;font-size:28px;color:var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:26px}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:13px;margin-top:14px}
+@media(max-width:560px){.hero h1{font-size:24px}.bar{grid-template-columns:110px 1fr 48px}.qtext{font-size:17px}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="home" id="homeBtn" aria-label="Home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+    Home
+  </button>
+  <div class="brand">ARAL External Tutors Pretest</div>
+  <div class="timer" id="timer">30:00</div>
+</div>
+
+<div class="wrap">
+
+<!-- PAGE 1: INSTRUCTIONS (landing) -->
+<section class="page active" id="pgHome">
+  <div class="hero">
+    <small>SDO Romblon · Curriculum Implementation Division</small>
+    <h1>External ARAL Tutors<br>Training Pretest</h1>
+    <p>20 real-life tutoring situations that check your 21st century skills.</p>
+  </div>
+
+  <div class="card">
+    <h2>How this works</h2>
+    <div class="steps">
+      <div class="step"><b class="n">1</b><span>Tap <b>Start</b> and choose your district and your name. If your name is not on the list, you can type it.</span></div>
+      <div class="step"><b class="n">2</b><span>Read each situation and pick the <b>best</b> action. Only one answer is best.</span></div>
+      <div class="step"><b class="n">3</b><span>You have <b>30 minutes</b>. The test submits itself when time is up.</span></div>
+      <div class="step"><b class="n">4</b><span>Tap <b>Submit</b>. You will see your score, your skill profile, and the correct answers.</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Before you begin</h2>
+    <ul class="rules">
+      <li>Work on your own. This is not graded as pass or fail. It shows where the training can help you most.</li>
+      <li>You can go back to any item and change your answer before you submit.</li>
+      <li>Do not refresh the page or press Home while answering, or your answers will be lost.</li>
+      <li>You can take this pretest only once. The same name and district cannot submit twice.</li>
+    </ul>
+    <div class="chips">
+      <span class="chip">Critical thinking</span><span class="chip">Communication</span><span class="chip">Collaboration</span>
+      <span class="chip">Creativity</span><span class="chip">ICT literacy</span><span class="chip">Life and career skills</span>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:24px">
+    <button class="btn" id="startBtn">Start the Pretest →</button><br>
+    <button class="link" id="facBtn">Facilitator dashboard</button> &nbsp;·&nbsp; <a class="link" href="./" style="text-decoration:underline;color:var(--muted)">Main menu</a>
+  </div>
+  <div class="foot">Schools Division Office of Romblon · Division-level training of External ARAL Tutors</div>
+</section>
+
+<!-- PAGE 2: REGISTER -->
+<section class="page" id="pgReg">
+  <div class="card">
+    <h2>Tell us who you are</h2>
+    <label for="fDist">District</label>
+    <select id="fDist"><option value="">Select your district</option></select>
+    <label for="fNameSel">Name</label>
+    <select id="fNameSel" disabled><option value="">Select your district first</option></select>
+    <div id="manual" style="display:none">
+      <label for="fName">Type your full name (Last name, First name)</label>
+      <input id="fName" autocomplete="off" placeholder="e.g., Dela Cruz, Maria">
+      <label for="fSchool">School (optional)</label>
+      <input id="fSchool" autocomplete="off" placeholder="e.g., Alcantara Central School">
+    </div>
+    <div class="note" id="schoolShow" style="display:none"></div>
+    <div class="err" id="regErr"></div>
+    <div class="nav"><button class="btn ghost" id="regBack">← Back</button><button class="btn" id="regGo">Begin (timer starts) →</button></div>
+    <div class="note">The 30-minute timer starts the moment you press Begin.</div>
+  </div>
+</section>
+
+<!-- PAGE 3: TEST -->
+<section class="page" id="pgTest">
+  <div class="card">
+    <div class="progress"><i id="prog"></i></div>
+    <div class="qmeta"><span id="qNum">Item 1 of 20</span><span class="skill" id="qSkill"></span></div>
+    <div class="qtext" id="qText"></div>
+    <div id="qOpts"></div>
+    <div class="nav">
+      <button class="btn ghost" id="prevBtn">← Previous</button>
+      <button class="btn" id="nextBtn">Next →</button>
+    </div>
+    <div class="dots" id="dots"></div>
+    <div class="err" id="testErr"></div>
+  </div>
+</section>
+
+<!-- PAGE 4: RESULT -->
+<section class="page" id="pgRes">
+  <div class="card score">
+    <div class="note" id="saveMsg"></div>
+    <h2 id="resName"></h2>
+    <div class="big" id="resScore">0/20</div>
+    <div class="note" id="resTime"></div>
+  </div>
+  <div class="card"><h2>Your 21st century skills profile</h2><div class="bars" id="resBars"></div></div>
+  <div class="card"><h2>Review: best answers</h2><div id="resRev"></div></div>
+  <div style="text-align:center;margin-top:20px"><button class="btn" id="resHome">← Back to Home</button><br><button class="btn ghost" id="retrySave" style="display:none;margin-top:10px">Retry saving my result</button></div>
+</section>
+
+<!-- PAGE 5: FACILITATOR -->
+<section class="page" id="pgFac">
+  <div class="card">
+    <h2>Facilitator dashboard</h2>
+    <label for="facPin">PIN</label>
+    <input id="facPin" type="password" inputmode="numeric" placeholder="Enter PIN">
+    <div class="err" id="facErr"></div>
+    <div class="nav"><button class="btn ghost" id="facBack">← Back</button><button class="btn" id="facGo">Open dashboard</button></div>
+  </div>
+  <div id="facOut"></div>
+</section>
+
+</div>
+
+<script>
+/* ===== CONFIG ===== */
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7kwqgr7QzbdMNjiS5VM-6VPnPekF9XQzPKJGKaAvoCxqqm5yXGiNmldOuYjlSJK4/exec";   // Paste your deployed Google Apps Script Web App URL here (see Code.gs)
+const TEST_MINUTES = 30;
+const ROSTER = {"Alcantara": [["ADELFA FERNANDO MESANA", "San Isidro ES"], ["DHIANNE BHRAINE DELA VEGA", "Alcantara CES"], ["HILBOY GALLOS BANTANG", "Melodias Imperial Sr. NHS"], ["IRISH KRYSCYNTH FALLENA", "Felipe Madali MES"], ["JESSAH BELL TABUNA RAMIREZ", "Tugdan ES"], ["JOSEPH ROLDAN GALICIA", "Calagonsao ES"], ["LANILYN CONEJO GALICIA", "Don Manuel L. Solidum MES"], ["MARIA FELISA MORENTE MAYOR", "Alcantara NHS"]], "Looc": [["CHESKA JOY G. CALAUD", "Crispin Grimares ES"], ["JOVITO P NAZARENO", "Jose M. Solis ES"], ["MA. NICKAELLA R. BONUS", "Gov. Gonzales ES"], ["MERJORY SANTIAGO CLAUD", "Pili ES"], ["NOELLYN GREGORIO CASTILLO", "Manhac ES"], ["SHAYNE ELIZABETH FOS GAA", "Limon Norte ES"], ["SHELLY JOY CANDIDO MANALO", "Punta ES"]], "Odiongan North": [["CARMELINA MIÑEQUE BLAUTA", "Odiongan North CS"], ["CHESKA D. FABABAER", "Libertad ES"], ["DOROTHY JOY BATAN", "Tumingad ES"], ["JEAN SORIANO TEMPLE", "Aurora ES"], ["KIMUEL FETALVERO FADRIQUELA", "Gabawan NHS"], ["STELLA MARIE FAMAT RAMILO", "Canlumay Cultural CS"], ["WEEDEN THEE M. MANATO", "Pato-o IS"]], "Odiongan South": [["ANJELY M. LANZADERAS", "Malilico ES"], ["BEVERLY M. GREGORIO", "Ferrol NHS"], ["CRIS FAMILARA FADRIQUELA", "Anahao IS"], ["IRENE FAMILARA FABELLORE", "Odiongan NHS"], ["MARIA LARBHE MARTINEZ PIJANO", "Mayha NHS"], ["MARY GRACE REYES FAMISAN", "Tubigon ES"], ["MICAH EVAN M. ARSULA", "Odiongan South CES"], ["YLLA MAE GADO LUNZAGAY", "Ferrol CES"]], "San Agustin-Santa Maria-Calatrava": [["JHEMYKA M. MANAS", "Carmen ES"], ["JOANNA SOFIA M. MABASA", "Long Beach ES"], ["JOCEL FAJUTNAO CAUNCA", "Calatrava NHS"], ["JOVELYN ANGELINO ARNAIZ", "Alfredo P. Navarette MS"], ["JUDY VINE D. FILLADO", "Concepcion Norte ES"], ["MARYLYN MANZO", "Esteban Madrona NHS"], ["SHELAH MAE M. GURO", "Bonga ES"]], "San Andres": [["ANGELA FRONDA BANDELARIA", "San Andres CES"], ["ARLENE S. GURO", "Marigondon Sur ES"], ["BELJUN F. MERANO", "Linawan IS"], ["CHRISLYN JOY T. GADON", "Tanagan NHS"], ["DHAILAINE KIEM AUGUIS MANATO", "San Andres NHS"], ["LORNA C. MALONES", "Marigondon Sur ES"], ["MELISA CRUZ FABILA", "Marigondon Norte IS"], ["REDENTOR G. ARNAIZ, JR.", "San Andres Cultural HS"], ["THEODORE CASIMERO GUNTAN", "Matutuna ES"]], "San Jose-Santa Fe": [["ABBY MENDOZA MABUNGA", "Lanas ES"], ["CARENA E. SEVILLA", "Pandan ES"], ["CHRISTINE JOY A. BERNARDO", "Magsaysay ES"], ["CONCEPCION P. SOLIVEN", "Guintigbasan ES"], ["JESSIRIE T. SANTIAGO", "Guinbirayan ES"], ["MA. JESSETTE TANDOG MARCELO", "Lanas ES"], ["MARK JOSEPH MAGCALAYO TAMAYO", "Santa Fe CES"], ["MARY GRACE BALDERA BANGALISAN", "Agripino Armedilla NHS"]]};
+const DISTRICTS = Object.keys(ROSTER).concat(["Other district (not listed)"]);
+const NOTLISTED = "My name is not on the list";
+
+/* ===== ITEMS (a = index of the best answer in the options array) ===== */
+const SKCOL = {CT:["#ffe3ea","#c2264b"],COM:["#fff0d9","#b36000"],COL:["#fff8c9","#8a7000"],CRE:["#d9f7ec","#04855f"],ICT:["#dff1fa","#0b6a92"],LCS:["#ece6ff","#5b3fd1"]};
+const SKILLS = {CT:"Critical thinking",COM:"Communication",COL:"Collaboration",CRE:"Creativity",ICT:"ICT literacy",LCS:"Life and career"};
+const ITEMS = [
+{s:"CT",q:"Marco is working on a worksheet and writes 3/8 + 2/8 = 5/16. As his tutor, what do you do?",
+ o:["Tell him the rule and have him copy the correct answer.","Mark it wrong and move on to the next learner.","Ask guiding questions such as, \"What does the denominator show? What is 1/4 + 2/4?\"","Make him write the correct answer five times."],a:2,
+ why:"The Tutor's Guide says tutors do not give answers or lecture. They use guiding questions and point learners back to earlier worksheets."},
+{s:"CT",q:"A learner gets 18 of 20 items correct on Worksheet 7 and wants to move to Worksheet 8.",
+ o:["Let him move on. 90% is good enough.","Circle the 2 wrong items, let him redo them with hints, and let him move up only when all items are correct.","Erase his wrong answers and write the correct ones.","Give him the answers so he can finish faster."],a:1,
+ why:"A learner advances only when all items on the worksheet are correct. Wrong items are marked, redone, and corrected without giving the answer."},
+{s:"CT",q:"During a reading session, a learner keeps reading \"bat\" as \"cat\" and \"sun\" as \"fun.\" What is the best response?",
+ o:["Ask him to read aloud in front of the class.","Skip the word and continue the lesson.","Tell him to practice more at home.","Note the pattern of difficulty and revisit the letter sounds through phoneme manipulation before moving on."],a:3,
+ why:"The Reading Tutor's Guide asks tutors to note patterns of difficulty for re-profiling and to keep the phoneme manipulation part of the lesson."},
+{s:"CT",q:"Eighteen learners show up for one class-based cycle in Key Stage 1. What should you do?",
+ o:["Teach all 18 together.","Keep 15 and send 3 home.","Split them into two groups (for example 9 and 9) in different cycles, in coordination with the School Head.","Wait to see if some of them leave."],a:2,
+ why:"A class-based cycle has 5 to 15 learners. Extra learners go to another group or cycle, and the school schedule is arranged with the School Head."},
+{s:"COM",q:"Your learners do not understand your instructions in English. What is the best way to give instructions?",
+ o:["Repeat the same instruction louder.","Say it in English first, translate it into the learners' language, then repeat it in English.","Use only Tagalog for the whole session.","Skip the instruction and demonstrate nothing."],a:1,
+ why:"The Reading Tutor's Guide recommends English first, then the learners' language, then English again, and unlocking unfamiliar English words."},
+{s:"COM",q:"A parent asks why her child seems to be moving up slowly. What do you do?",
+ o:["Tell her the child is just weak.","Show the child's progress card (current level and date of last move-up) and explain politely what the next step is.","Refer her to another tutor.","Avoid the parent."],a:1,
+ why:"The progress card records the child's current level and the date of each move-up. It gives the tutor honest, respectful evidence to share."},
+{s:"COM",q:"Classmates laugh when a learner reads a word incorrectly. What do you do?",
+ o:["Ignore it. They are only joking.","Send the child out of the room.","Calmly stop the laughing, then correct the child privately while praising the effort.","Replace the reader with another learner."],a:2,
+ why:"The guide asks tutors to avoid public correction, to stay calm and kind, and to give positive reinforcement. Learners need a safe place to make mistakes."},
+{s:"COL",q:"The class teacher asks to change the time you swap stations, but your schedule is fixed. What is the best move?",
+ o:["Refuse right away.","Follow the teacher even if your hours no longer fit.","Discuss it with the teacher and School Head and agree on a new schedule that stays within the allowed hours.","Stop tutoring until it is settled."],a:2,
+ why:"Schedules and loads are set by the School Head. Good collaboration means agreeing together while staying inside the rules."},
+{s:"COL",q:"You and another tutor disagree on whether a learner should move up to the next level. What do you do?",
+ o:["The younger tutor follows the older one.","Wait until someone gets upset.","Compare the progress card and pretest data, agree on a basis, and ask the School Head if you still cannot agree.","Let the learner decide."],a:2,
+ why:"Decisions about move-up should rest on evidence such as the mastery check and progress card, not on seniority or preference."},
+{s:"COL",q:"The teacher is asked to sign your learner log, but the entries are incomplete. What do you do?",
+ o:["Let the teacher sign anyway.","Complete the details (name, time, subject) before the teacher signs.","Fill it in at the end of the week.","Skip the log. It is not needed."],a:1,
+ why:"The learner log records the name, time, and subject for each slot and is signed by the teacher. It is a shared safeguard and a basis for pay."},
+{s:"CRE",q:"Learners are bored with repeating worksheets. What is the best response?",
+ o:["Cut the worksheets down.","Replace the worksheets with a lecture.","Turn practice into a friendly challenge (for example, a race to earn a star) while still using the worksheets as the main material.","Let them copy answers."],a:2,
+ why:"The approach depends on repetition for mastery. Creativity lies in keeping learners motivated without dropping the worksheet progression."},
+{s:"CRE",q:"You have no place value blocks for your Grade 3 learners. What do you do?",
+ o:["Skip place value.","Make your own materials from local objects, such as bottle caps for ones and sticks bundled in tens.","Use only the board.","Ask parents to buy blocks."],a:1,
+ why:"Tutors are expected to make learning concrete. Low-cost local materials can stand in for manipulatives."},
+{s:"CRE",q:"A learner does not know the word \"stove\" in a story. What do you do?",
+ o:["Skip the word.","Tell him to just memorize it.","Have him copy the meaning.","Show a picture or the real object, translate it to his language, say it in English again, and have him use it in a sentence."],a:3,
+ why:"The Reading Tutor's Guide suggests unlocking words by translating to L1 and back to English and through oral language drills."},
+{s:"ICT",q:"A fellow tutor wants to post learners' names and scores on Facebook to show the gains. What is the best advice?",
+ o:["It is fine if the parents are tagged.","Post it, but blur the faces.","Do not post. Share learner data only with the School Head and teacher, and use grouped results if you need to show progress.","Post it in the barangay group chat instead."],a:2,
+ why:"DM 061 requires tutors to protect learners, including data privacy. Learner identity and results are not for public posting."},
+{s:"ICT",q:"An AI tool gives you a different answer from the answer key in the Tutor's Guide. What do you do?",
+ o:["Follow the AI answer.","Follow whichever you read first.","Check it against the Tutor's Guide, and if it is still unclear, ask a Master Teacher or the ARAL Secretariat.","Change the answer key."],a:2,
+ why:"Good information literacy means verifying a tool's output against the official source and asking the right people when unsure."},
+{s:"ICT",q:"The internet is too slow on the day of the online pretest. What do you do?",
+ o:["Let the learners answer on paper, encode the results once there is signal, and tell the School Head.","Postpone it without telling anyone.","Skip the test.","Let another learner take it for them."],a:0,
+ why:"A flexible, honest backup keeps the data complete. The pre and post tests are how learner gains will be measured."},
+{s:"LCS",q:"You are sick today and did not hold any tutorial session. How should you handle your DTR?",
+ o:["Log the full hours anyway.","Do not log hours for that day and inform the School Head. Absences are not paid.","Change the date on the DTR.","Ask a friend to sign for you."],a:1,
+ why:"Pay is based on actual tutoring hours rendered and verified through the DTR and Accomplishment Report. Accountability means honest records."},
+{s:"LCS",q:"A learner is left alone with you after class. What should you do?",
+ o:["Stay with him in a closed room.","Stay in an open, visible place and inform the teacher or School Head.","Leave him there.","Take him home without telling anyone."],a:1,
+ why:"The Child Protection Policy applies. Tutors should not be alone with a child and should work in open, visible areas."},
+{s:"LCS",q:"A school event changes your tutorial schedule. What do you do?",
+ o:["Complain and refuse.","Work out a new time with the School Head, keeping to the daily limit of 4 hours (3 hours of actual tutoring plus 1 hour of preparation).","Skip the week.","Tutor at any time without telling anyone."],a:1,
+ why:"Flexibility with accountability: adjust the schedule through the School Head and stay within the 3 + 1 hour daily limit."},
+{s:"LCS",q:"Five learners can barely read simple words, and you have only 9 pull-out slots of 20 minutes today. How do you decide?",
+ o:["Choose the best readers.","Draw lots.","Start with the learners with the lowest pretest results, 2 to 3 per 20-minute slot, in an open place and not during core subject time.","Put all five in one group."],a:2,
+ why:"Pull-out targets those who need the most help. Social responsibility means giving priority to the learners most at risk, safely and within the rules."}
+];
+
+/* ===== STATE ===== */
+let st = null, timerId = null, lastPayload = null;
+const $ = id => document.getElementById(id);
+const pages = ["pgHome","pgReg","pgTest","pgRes","pgFac"];
+function show(id){pages.forEach(p=>$(p).classList.toggle("active",p===id));window.scrollTo(0,0);$("timer").style.display=(id==="pgTest")?"block":"none"}
+
+function seedRand(seed){let t=seed>>>0;return()=>{t+=0x6D2B79F5;let r=Math.imul(t^t>>>15,1|t);r^=r+Math.imul(r^r>>>7,61|r);return((r^r>>>14)>>>0)/4294967296}}
+function hash(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+
+DISTRICTS.forEach(m=>{const o=document.createElement("option");o.value=m;o.textContent=m;$("fDist").appendChild(o)});
+function fillNames(){
+  const d=$("fDist").value, s=$("fNameSel"); s.innerHTML="";
+  const add=(v,t)=>{const o=document.createElement("option");o.value=v;o.textContent=t;s.appendChild(o)};
+  $("manual").style.display="none";$("schoolShow").style.display="none";
+  if(!d){add("","Select your district first");s.disabled=true;return}
+  s.disabled=false;add("","Select your name");
+  (ROSTER[d]||[]).forEach(p=>add(p[0],p[0]));
+  add(NOTLISTED,NOTLISTED);
+  if(!ROSTER[d]){s.value=NOTLISTED;nameChosen()}
+}
+function nameChosen(){
+  const d=$("fDist").value, v=$("fNameSel").value;
+  $("manual").style.display=(v===NOTLISTED)?"block":"none";
+  const p=(ROSTER[d]||[]).find(x=>x[0]===v);
+  const n=$("schoolShow");
+  if(p){n.textContent="School: "+p[1];n.style.display="block"}else n.style.display="none";
+}
+$("fDist").onchange=fillNames;$("fNameSel").onchange=nameChosen;
+
+$("homeBtn").onclick=()=>{
+  if(st && st.running && !confirm("Leaving now will erase your answers and stop the timer. Go Home?")) return;
+  if(st && st.running){stopTimer();st=null}
+  show("pgHome");
+};
+$("startBtn").onclick=()=>show("pgReg");
+$("regBack").onclick=()=>show("pgHome");
+$("facBtn").onclick=()=>show("pgFac");
+$("facBack").onclick=()=>show("pgHome");
+$("resHome").onclick=()=>show("pgHome");
+
+$("regGo").onclick=()=>{
+  const dist=$("fDist").value, sel=$("fNameSel").value; let name,school="";
+  if(!dist){$("regErr").textContent="Please select your district.";return}
+  if(!sel){$("regErr").textContent="Please select your name.";return}
+  if(sel===NOTLISTED){
+    name=$("fName").value.trim().replace(/\s+/g," "); school=$("fSchool").value.trim();
+    if(name.length<4||!/[A-Za-z]/.test(name)){$("regErr").textContent="Please type your full name.";return}
+  }else{name=sel;school=((ROSTER[dist]||[]).find(x=>x[0]===sel)||["",""])[1]}
+  $("regErr").textContent="";
+  startTest(name,dist,school);
+};
+
+function startTest(name,mun,school){
+  const rnd=seedRand(hash(name.toLowerCase()+mun));
+  const order = ITEMS.map((it,i)=>{
+    const idx=[0,1,2,3];
+    for(let k=3;k>0;k--){const j=Math.floor(rnd()*(k+1));[idx[k],idx[j]]=[idx[j],idx[k]]}
+    return {i, idx};
+  });
+  st={name,mun,school,order,cur:0,ans:new Array(ITEMS.length).fill(null),running:true,end:Date.now()+TEST_MINUTES*60000,start:Date.now()};
+  show("pgTest");render();tick();timerId=setInterval(tick,500);
+}
+function stopTimer(){clearInterval(timerId);timerId=null}
+function tick(){
+  if(!st||!st.running)return;
+  const left=Math.max(0,st.end-Date.now()), m=Math.floor(left/60000), s=Math.floor(left%60000/1000);
+  const t=$("timer");t.textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+  t.className="timer"+(left<=60000?" danger":left<=300000?" warn":"");
+  if(left<=0){finish(true)}
+}
+function render(){
+  const o=st.order[st.cur], it=ITEMS[o.i];
+  $("qNum").textContent="Item "+(st.cur+1)+" of "+ITEMS.length;
+  $("qSkill").textContent=SKILLS[it.s];$("qSkill").style.background=SKCOL[it.s][0];$("qSkill").style.color=SKCOL[it.s][1];
+  $("qText").textContent=it.q;
+  $("prog").style.width=(st.ans.filter(x=>x!==null).length/ITEMS.length*100)+"%";
+  const box=$("qOpts");box.innerHTML="";
+  o.idx.forEach((orig,pos)=>{
+    const b=document.createElement("button");b.className="opt"+(st.ans[st.cur]===orig?" sel":"");
+    b.innerHTML='<span class="l">'+"ABCD"[pos]+'</span><span></span>';
+    b.lastChild.textContent=it.o[orig];
+    b.onclick=()=>{st.ans[st.cur]=orig;render()};
+    box.appendChild(b);
+  });
+  $("prevBtn").style.visibility=st.cur===0?"hidden":"visible";
+  $("nextBtn").textContent=st.cur===ITEMS.length-1?"Submit ✓":"Next →";
+  const d=$("dots");d.innerHTML="";
+  ITEMS.forEach((_,i)=>{const b=document.createElement("button");b.className="dot"+(st.ans[i]!==null?" done":"")+(i===st.cur?" cur":"");b.textContent=i+1;b.onclick=()=>{st.cur=i;render()};d.appendChild(b)});
+  $("testErr").textContent="";
+}
+$("prevBtn").onclick=()=>{if(st.cur>0){st.cur--;render()}};
+$("nextBtn").onclick=()=>{
+  if(st.cur<ITEMS.length-1){st.cur++;render();return}
+  const un=st.ans.map((a,i)=>a===null?i+1:null).filter(Boolean);
+  if(un.length && !confirm("You have not answered item(s): "+un.join(", ")+". Submit anyway?"))return;
+  finish(false);
+};
+
+function finish(auto){
+  if(!st||!st.running)return;
+  st.running=false;stopTimer();
+  const used=Math.min(TEST_MINUTES*60,Math.round((Date.now()-st.start)/1000));
+  let score=0;const skill={};Object.keys(SKILLS).forEach(k=>skill[k]={c:0,n:0});
+  const rows=[];
+  ITEMS.forEach((it,i)=>{
+    // st.order index: find position of item i in order
+    const pos=st.order.findIndex(o=>o.i===i);
+    const a=st.ans[pos];
+    const ok=a===it.a;
+    skill[it.s].n++; if(ok){skill[it.s].c++;score++}
+    rows.push({n:i+1,s:it.s,pick:a,ok});
+  });
+  const answers=ITEMS.map((_,i)=>{const pos=st.order.findIndex(o=>o.i===i);return st.ans[pos]===null?"-":"ABCD"[st.ans[pos]]}).join("");
+  lastPayload={action:"submit",ts:new Date().toISOString(),name:st.name,district:st.mun,school:st.school,score,total:ITEMS.length,seconds:used,auto:auto?1:0,skills:skill,answers:answers,itemok:rows.map(r=>r.ok?"1":"0").join(""),ua:navigator.userAgent.slice(0,120)};
+  showResult(score,skill,used,auto);
+  sendResult();
+}
+function sendResult(){
+  const msg=$("saveMsg"),retry=$("retrySave");
+  if(!APPS_SCRIPT_URL){msg.textContent="Result shown on this device only (no database connected yet).";retry.style.display="none";return}
+  msg.textContent="Saving your result…";retry.style.display="none";
+  fetch(APPS_SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(lastPayload)})
+   .then(r=>r.json()).then(j=>{
+     if(j&&j.ok){msg.textContent="✓ Your result has been saved.";}
+     else if(j&&j.error==="duplicate"){msg.textContent="A result for this name and district was already saved earlier.";}
+     else{throw new Error("bad")}
+   }).catch(()=>{msg.textContent="Could not save. Check your connection, then tap Retry. Do not close this page.";retry.style.display="inline-flex"});
+}
+$("retrySave").onclick=sendResult;
+
+function showResult(score,skill,used,auto){
+  show("pgRes");
+  $("resName").textContent=st.name+" · "+st.mun;
+  $("resScore").textContent=score+"/"+ITEMS.length;
+  const mm=Math.floor(used/60),ss=used%60;
+  $("resTime").textContent="Time used: "+mm+" min "+ss+" s"+(auto?" (time ran out)":"");
+  const bars=$("resBars");bars.innerHTML="";
+  Object.keys(SKILLS).forEach(k=>{
+    const p=Math.round(skill[k].c/skill[k].n*100);
+    const d=document.createElement("div");d.className="bar";
+    d.innerHTML='<span>'+SKILLS[k]+'</span><div class="t"><i style="width:'+p+'%"></i></div><span>'+skill[k].c+'/'+skill[k].n+'</span>';
+    bars.appendChild(d);
+  });
+  const rev=$("resRev");rev.innerHTML="";
+  ITEMS.forEach((it,i)=>{
+    const pos=st.order.findIndex(o=>o.i===i);const a=st.ans[pos];const ok=a===it.a;
+    const d=document.createElement("div");d.className="rev "+(ok?"ok":"bad");
+    const h=document.createElement("h4");h.textContent=(i+1)+". "+(ok?"Correct":"Not quite")+" · "+SKILLS[it.s];
+    const q=document.createElement("p");q.textContent=it.q;
+    const y=document.createElement("p");y.innerHTML="<b>Your answer:</b> ";y.append(a===null?"(no answer)":it.o[a]);
+    const b=document.createElement("p");b.innerHTML="<b>Best answer:</b> ";b.append(it.o[it.a]);
+    const w=document.createElement("p");w.className="tag";w.textContent=it.why;
+    d.append(h,q);if(!ok)d.append(y);d.append(b,w);rev.appendChild(d);
+  });
+}
+
+/* ===== FACILITATOR DASHBOARD ===== */
+$("facGo").onclick=()=>{
+  const pin=$("facPin").value.trim();
+  if(!APPS_SCRIPT_URL){$("facErr").textContent="No database connected yet. Paste the Apps Script URL in the page first.";return}
+  if(!pin){$("facErr").textContent="Enter the PIN.";return}
+  $("facErr").textContent="Loading…";
+  fetch(APPS_SCRIPT_URL+"?action=results&pin="+encodeURIComponent(pin)).then(r=>r.json()).then(j=>{
+    if(!j.ok){$("facErr").textContent=j.error==="pin"?"Wrong PIN.":"Could not load.";return}
+    $("facErr").textContent="";drawDash(j.rows);
+  }).catch(()=>{$("facErr").textContent="Could not reach the database."});
+};
+function drawDash(rows){
+  const out=$("facOut");out.innerHTML="";
+  const n=rows.length;
+  const avg=n?(rows.reduce((a,r)=>a+Number(r.score),0)/n):0;
+  const sk={};Object.keys(SKILLS).forEach(k=>sk[k]={c:0,n:0});
+  const itemC=new Array(ITEMS.length).fill(0);
+  rows.forEach(r=>{
+    let s={};try{s=JSON.parse(r.skills)}catch(e){}
+    Object.keys(SKILLS).forEach(k=>{if(s[k]){sk[k].c+=s[k].c;sk[k].n+=s[k].n}});
+    const a=String(r.answers||"");
+    ITEMS.forEach((it,i)=>{ /* answers are stored in original item order as letters of the shown position, so use score per item flags */ });
+    if(r.itemok){String(r.itemok).split("").forEach((ch,i)=>{if(ch==="1")itemC[i]++})}
+  });
+  const byDist={};rows.forEach(r=>{(byDist[r.district]=byDist[r.district]||[]).push(Number(r.score))});
+  let h='<div class="card"><h2>Live results</h2><div class="stat"><div><b>'+n+'</b>Participants</div><div><b>'+avg.toFixed(1)+'</b>Average score (of 20)</div><div><b>'+(n?Math.round(avg/20*100):0)+'%</b>Average percent</div></div>';
+  h+='<h2 style="margin-top:18px">By skill</h2><div class="bars">';
+  Object.keys(SKILLS).forEach(k=>{const p=sk[k].n?Math.round(sk[k].c/sk[k].n*100):0;h+='<div class="bar"><span>'+SKILLS[k]+'</span><div class="t"><i style="width:'+p+'%"></i></div><span>'+p+'%</span></div>'});
+  h+='</div><h2 style="margin-top:18px">Percent correct per item</h2><div class="bars">';
+  ITEMS.forEach((it,i)=>{const p=n?Math.round(itemC[i]/n*100):0;h+='<div class="bar"><span>Item '+(i+1)+' · '+it.s+'</span><div class="t"><i style="width:'+p+'%"></i></div><span>'+p+'%</span></div>'});
+  h+='</div><h2 style="margin-top:18px">By district</h2><table><tr><th>District</th><th>Count</th><th>Average</th></tr>';
+  Object.keys(byDist).sort().forEach(m=>{const a=byDist[m];h+='<tr><td>'+m+'</td><td>'+a.length+'</td><td>'+(a.reduce((x,y)=>x+y,0)/a.length).toFixed(1)+'</td></tr>'});
+  h+='</table></div>';
+  out.innerHTML=h;
+}
+
+</script>
+</body>
+</html>

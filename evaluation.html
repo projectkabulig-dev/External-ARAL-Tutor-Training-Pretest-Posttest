@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARAL External Tutors End-of-Day Evaluation | SDO Romblon</title>
+<style>
+:root{
+  --ink:#10243e; --muted:#5b6b82; --line:#e3e9f2; --bg:#f3f6fb; --card:#ffffff;
+  --blue:#1f5eff; --teal:#00b3a4; --gold:#ffb703; --rose:#ef476f; --green:#12a150;
+  --grad:linear-gradient(135deg,#1f5eff 0%,#6a3df0 55%,#00b3a4 120%);
+  --rb:linear-gradient(90deg,#ef476f,#ff9f1c,#ffd60a,#06d6a0,#118ab2,#7b5cff);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.topbar:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:4px;background:var(--rb)}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:10px 16px}
+.home{display:inline-flex;align-items:center;gap:8px;border:0;background:var(--grad);color:#fff;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer;font-size:14px;box-shadow:0 4px 12px rgba(31,94,255,.3)}
+.home svg{width:18px;height:18px}
+.brand{font-weight:700;font-size:14px;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;font-size:18px;padding:6px 14px;border-radius:999px;background:#eaf0ff;color:var(--blue);display:none}
+.timer.warn{background:#fff1d6;color:#b36b00}
+.timer.danger{background:#ffe3ea;color:var(--rose);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.55}}
+.wrap{max-width:860px;margin:0 auto;padding:20px 16px 80px}
+.page{display:none;animation:fade .35s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{background:var(--grad);color:#fff;border-radius:24px;padding:34px 26px;box-shadow:0 18px 40px rgba(31,94,255,.28);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.12)}
+.hero small{letter-spacing:.14em;text-transform:uppercase;opacity:.85;font-weight:700}
+.hero h1{margin:8px 0 6px;font-size:30px;line-height:1.15}
+.hero p{margin:0;opacity:.92}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;margin-top:18px;box-shadow:0 6px 22px rgba(16,36,62,.06)}
+.card h2{margin:0 0 12px;font-size:19px}
+.steps{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.step{display:flex;gap:12px;align-items:flex-start;background:#f7f9fe;border:1px solid var(--line);border-radius:16px;padding:14px}
+.step:nth-child(1) b.n{background:#ef476f}.step:nth-child(2) b.n{background:#ff9f1c}.step:nth-child(3) b.n{background:#06d6a0}.step:nth-child(4) b.n{background:#7b5cff}
+.step b.n{flex:0 0 34px;height:34px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:15px}
+.step span{font-size:14px;color:#33465f}
+.rules{margin:0;padding-left:20px;color:#33465f;font-size:14.5px}
+.rules li{margin:6px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{font-size:12.5px;font-weight:700;padding:5px 11px;border-radius:999px;background:#eef3ff;color:var(--blue)}
+.chip:nth-child(1){background:#ffe3ea;color:#c2264b}.chip:nth-child(2){background:#fff0d9;color:#b36000}.chip:nth-child(3){background:#fff8c9;color:#8a7000}.chip:nth-child(4){background:#d9f7ec;color:#04855f}.chip:nth-child(5){background:#dff1fa;color:#0b6a92}.chip:nth-child(6){background:#ece6ff;color:#5b3fd1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:13px 22px;font-weight:800;font-size:16px;cursor:pointer;background:var(--grad);color:#fff;box-shadow:0 10px 22px rgba(31,94,255,.28);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost{background:#fff;color:var(--blue);border:2px solid #cfdcff;box-shadow:none}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+input,select{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:12px;font-size:16px;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(31,94,255,.12)}
+.err{color:var(--rose);font-weight:700;font-size:14px;margin-top:10px;min-height:20px}
+.progress{height:10px;background:#e6ecf7;border-radius:99px;overflow:hidden;margin:2px 0 14px}
+.progress i{display:block;height:100%;width:0;background:var(--rb);transition:width .3s}
+.qmeta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:700}
+.skill{padding:4px 10px;border-radius:999px;background:#e6fbf8;color:#007f74}
+.qtext{font-size:19px;font-weight:600;margin:12px 0 16px;line-height:1.45}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:2px solid var(--line);background:#fff;border-radius:16px;padding:13px 14px;margin:10px 0;cursor:pointer;font-size:16px;color:var(--ink);transition:.15s}
+.opt:hover{border-color:#9db9ff;background:#f6f9ff}
+.opt .l{flex:0 0 32px;height:32px;border-radius:50%;background:#eef3ff;color:var(--blue);display:grid;place-items:center;font-weight:800}
+.opt.sel{border-color:var(--blue);background:#eef3ff}
+.opt.sel .l{background:var(--blue);color:#fff}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.dot{width:30px;height:30px;border-radius:9px;border:2px solid var(--line);background:#fff;font-size:12px;font-weight:800;cursor:pointer;color:var(--muted)}
+.dot.done{background:#e8f6ee;border-color:#a8dfc0;color:var(--green)}
+.dot.cur{border-color:var(--blue);color:var(--blue)}
+.score{text-align:center}
+.score .big{font-size:64px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+.bars{margin-top:14px}
+.bar{display:grid;grid-template-columns:150px 1fr 56px;gap:10px;align-items:center;margin:9px 0;font-size:14px;font-weight:700}
+.bar .t{height:14px;border-radius:99px;background:#e6ecf7;overflow:hidden}
+.bar .t i{display:block;height:100%;background:var(--rb)}
+.rev{border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0;background:#fff}
+.rev.ok{border-left:6px solid var(--green)}
+.rev.bad{border-left:6px solid var(--rose)}
+.rev h4{margin:0 0 6px;font-size:15px}
+.rev p{margin:4px 0;font-size:14px;color:#33465f}
+.tag{font-size:12px;color:var(--muted)}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+.stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:12px 0}
+.stat div{background:#f5f8ff;border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center}
+.stat b{display:block;font-size:28px;color:var(--blue)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.foot{text-align:center;color:var(--muted);font-size:12.5px;margin-top:26px}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:13px;margin-top:14px}
+@media(max-width:560px){.hero h1{font-size:24px}.bar{grid-template-columns:110px 1fr 48px}.qtext{font-size:17px}}
+
+.legend{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}
+.legend div{text-align:center;background:#f7f9fe;border:1px solid var(--line);border-radius:14px;padding:10px 4px;font-size:12px;font-weight:700;color:#33465f}
+.legend span{display:block;font-size:30px;line-height:1.1}
+.q{border:1px solid var(--line);border-radius:18px;padding:14px;margin:12px 0;background:#fff}
+.q p{margin:0 0 10px;font-weight:700;font-size:16px}
+.q .tag{display:inline-block;margin-bottom:6px;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:99px;background:#ece6ff;color:#5b3fd1}
+.an{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.an button{border:2px solid var(--line);background:#fff;border-radius:14px;padding:8px 2px;cursor:pointer;font-size:30px;line-height:1.1;transition:.15s;color:var(--ink)}
+.an button small{display:block;font-size:10.5px;font-weight:700;color:var(--muted);margin-top:3px}
+.an button:hover{transform:translateY(-2px);border-color:#9db9ff}
+.an button.sel{border-color:var(--blue);background:#eef3ff;box-shadow:0 0 0 4px rgba(31,94,255,.14);transform:scale(1.06)}
+.an button.sel small{color:var(--blue)}
+textarea{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:12px;font-size:16px;font-family:inherit;min-height:64px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(31,94,255,.12)}
+.cnt{font-size:12px;color:var(--muted);text-align:right}
+.big-an{font-size:84px;text-align:center;line-height:1.1;margin:6px 0}
+.wc{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.wc span{background:#eef3ff;color:var(--blue);font-weight:800;border-radius:99px;padding:6px 12px}
+.cm{border-left:5px solid #cfdcff;background:#f7f9fe;border-radius:10px;padding:8px 12px;margin:8px 0;font-size:14px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <button class="home" id="homeBtn" aria-label="Home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+    Home
+  </button>
+  <div class="brand">ARAL External Tutors · End-of-Day Evaluation</div>
+</div>
+<div class="wrap">
+
+<section class="page active" id="pgHome">
+  <div class="hero">
+    <small>SDO Romblon · Curriculum Implementation Division</small>
+    <h1>How was your day? 🦁🐬🐕🐢🐌</h1>
+    <p>Training of External ARAL Tutors · November 23-25, 2026 · FAAS Lofts, San Agustin</p>
+  </div>
+  <div class="card">
+    <h2>How this works</h2>
+    <div class="steps">
+      <div class="step"><b class="n">1</b><span>Tap <b>Start</b>. Choose the day, your district, and your name.</span></div>
+      <div class="step"><b class="n">2</b><span>For each sentence, <b>tap one animal</b> that shows how you feel.</span></div>
+      <div class="step"><b class="n">3</b><span>Write <b>one word</b> for today, and a few short answers.</span></div>
+      <div class="step"><b class="n">4</b><span>Tap <b>Submit</b>. It takes about 3 minutes.</span></div>
+    </div>
+    <h2 style="margin-top:20px">The animal scale</h2>
+    <div class="legend" id="legend"></div>
+    <ul class="rules" style="margin-top:14px">
+      <li>Be honest. Your answers help us improve tomorrow's training.</li>
+      <li>You can submit one evaluation for each day.</li>
+    </ul>
+    <div class="nav" style="justify-content:center"><button class="btn" id="startBtn">Start →</button></div>
+    <div style="text-align:center"><button class="link" id="facBtn">Facilitator dashboard</button></div>
+  </div>
+  <div class="foot">Schools Division Office of Romblon · ARAL Program</div>
+</section>
+
+<section class="page" id="pgReg">
+  <div class="card">
+    <h2>Tell us who you are</h2>
+    <label for="fDay">Which day are you evaluating?</label>
+    <select id="fDay"><option value="1">Day 1 · Nov 23</option><option value="2">Day 2 · Nov 24</option><option value="3">Day 3 · Nov 25</option></select>
+    <label for="fDist">District</label>
+    <select id="fDist"><option value="">Select your district</option></select>
+    <label for="fNameSel">Name</label>
+    <select id="fNameSel" disabled><option value="">Select your district first</option></select>
+    <div id="manual" style="display:none">
+      <label for="fName">Type your full name (Last name, First name)</label>
+      <input id="fName" autocomplete="off" placeholder="e.g., Dela Cruz, Maria">
+    </div>
+    <div class="err" id="regErr"></div>
+    <div class="nav"><button class="btn ghost" id="regBack">← Back</button><button class="btn" id="regGo">Next →</button></div>
+  </div>
+</section>
+
+<section class="page" id="pgEval">
+  <div class="card">
+    <h2 id="evTitle">Day 1</h2>
+    <div class="note">Tap one animal for each sentence.</div>
+    <div class="progress"><i id="prog"></i></div>
+    <div id="qs"></div>
+    <h2 style="margin-top:22px">In your own words</h2>
+    <label for="oneWord">One word that describes today <span style="color:var(--rose)">*</span></label>
+    <input id="oneWord" maxlength="20" autocomplete="off" placeholder="e.g., Inspiring">
+    <label for="best">The best part of today</label>
+    <textarea id="best" maxlength="140" placeholder="Short answer"></textarea>
+    <label for="help">One thing I still need help with</label>
+    <textarea id="help" maxlength="140" placeholder="Short answer"></textarea>
+    <label for="sugg">One suggestion for tomorrow</label>
+    <textarea id="sugg" maxlength="140" placeholder="Short answer"></textarea>
+    <div class="err" id="evErr"></div>
+    <div class="nav"><button class="btn ghost" id="evBack">← Back</button><button class="btn" id="evGo">Submit ✓</button></div>
+  </div>
+</section>
+
+<section class="page" id="pgDone">
+  <div class="card score">
+    <div class="big-an" id="doneAn">🦁</div>
+    <h2>Thank you!</h2>
+    <p id="doneMsg" style="color:#33465f"></p>
+    <div class="note" id="saveMsg"></div>
+    <div class="nav" style="justify-content:center"><button class="btn ghost" id="retryBtn" style="display:none">Try saving again</button><button class="btn" id="doneHome">Home</button></div>
+  </div>
+</section>
+
+<section class="page" id="pgFac">
+  <div class="card">
+    <h2>Facilitator dashboard</h2>
+    <label for="facPin">PIN</label>
+    <input id="facPin" type="password" inputmode="numeric" autocomplete="off">
+    <label for="facDay">Day</label>
+    <select id="facDay"><option value="0">All days</option><option value="1">Day 1</option><option value="2">Day 2</option><option value="3">Day 3</option></select>
+    <div class="err" id="facErr"></div>
+    <div class="nav"><button class="btn ghost" id="facBack">← Back</button><button class="btn" id="facGo">Open</button></div>
+    <div id="dash"></div>
+  </div>
+</section>
+
+</div>
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7kwqgr7QzbdMNjiS5VM-6VPnPekF9XQzPKJGKaAvoCxqqm5yXGiNmldOuYjlSJK4/exec";
+const ROSTER = {"Alcantara": [["ADELFA FERNANDO MESANA", "San Isidro ES"], ["DHIANNE BHRAINE DELA VEGA", "Alcantara CES"], ["HILBOY GALLOS BANTANG", "Melodias Imperial Sr. NHS"], ["IRISH KRYSCYNTH FALLENA", "Felipe Madali MES"], ["JESSAH BELL TABUNA RAMIREZ", "Tugdan ES"], ["JOSEPH ROLDAN GALICIA", "Calagonsao ES"], ["LANILYN CONEJO GALICIA", "Don Manuel L. Solidum MES"], ["MARIA FELISA MORENTE MAYOR", "Alcantara NHS"]], "Looc": [["CHESKA JOY G. CALAUD", "Crispin Grimares ES"], ["JOVITO P NAZARENO", "Jose M. Solis ES"], ["MA. NICKAELLA R. BONUS", "Gov. Gonzales ES"], ["MERJORY SANTIAGO CLAUD", "Pili ES"], ["NOELLYN GREGORIO CASTILLO", "Manhac ES"], ["SHAYNE ELIZABETH FOS GAA", "Limon Norte ES"], ["SHELLY JOY CANDIDO MANALO", "Punta ES"]], "Odiongan North": [["CARMELINA MIÑEQUE BLAUTA", "Odiongan North CS"], ["CHESKA D. FABABAER", "Libertad ES"], ["DOROTHY JOY BATAN", "Tumingad ES"], ["JEAN SORIANO TEMPLE", "Aurora ES"], ["KIMUEL FETALVERO FADRIQUELA", "Gabawan NHS"], ["STELLA MARIE FAMAT RAMILO", "Canlumay Cultural CS"], ["WEEDEN THEE M. MANATO", "Pato-o IS"]], "Odiongan South": [["ANJELY M. LANZADERAS", "Malilico ES"], ["BEVERLY M. GREGORIO", "Ferrol NHS"], ["CRIS FAMILARA FADRIQUELA", "Anahao IS"], ["IRENE FAMILARA FABELLORE", "Odiongan NHS"], ["MARIA LARBHE MARTINEZ PIJANO", "Mayha NHS"], ["MARY GRACE REYES FAMISAN", "Tubigon ES"], ["MICAH EVAN M. ARSULA", "Odiongan South CES"], ["YLLA MAE GADO LUNZAGAY", "Ferrol CES"]], "San Agustin-Santa Maria-Calatrava": [["JHEMYKA M. MANAS", "Carmen ES"], ["JOANNA SOFIA M. MABASA", "Long Beach ES"], ["JOCEL FAJUTNAO CAUNCA", "Calatrava NHS"], ["JOVELYN ANGELINO ARNAIZ", "Alfredo P. Navarette MS"], ["JUDY VINE D. FILLADO", "Concepcion Norte ES"], ["MARYLYN MANZO", "Esteban Madrona NHS"], ["SHELAH MAE M. GURO", "Bonga ES"]], "San Andres": [["ANGELA FRONDA BANDELARIA", "San Andres CES"], ["ARLENE S. GURO", "Marigondon Sur ES"], ["BELJUN F. MERANO", "Linawan IS"], ["CHRISLYN JOY T. GADON", "Tanagan NHS"], ["DHAILAINE KIEM AUGUIS MANATO", "San Andres NHS"], ["LORNA C. MALONES", "Marigondon Sur ES"], ["MELISA CRUZ FABILA", "Marigondon Norte IS"], ["REDENTOR G. ARNAIZ, JR.", "San Andres Cultural HS"], ["THEODORE CASIMERO GUNTAN", "Matutuna ES"]], "San Jose-Santa Fe": [["ABBY MENDOZA MABUNGA", "Lanas ES"], ["CARENA E. SEVILLA", "Pandan ES"], ["CHRISTINE JOY A. BERNARDO", "Magsaysay ES"], ["CONCEPCION P. SOLIVEN", "Guintigbasan ES"], ["JESSIRIE T. SANTIAGO", "Guinbirayan ES"], ["MA. JESSETTE TANDOG MARCELO", "Lanas ES"], ["MARK JOSEPH MAGCALAYO TAMAYO", "Santa Fe CES"], ["MARY GRACE BALDERA BANGALISAN", "Agripino Armedilla NHS"]]};
+const DISTRICTS = Object.keys(ROSTER).concat(["Other district (not listed)"]);
+const NOTLISTED = "My name is not on the list";
+const ANIMALS = [
+  {e:"🐌",t:"Needs work"},
+  {e:"🐢",t:"Slow"},
+  {e:"🐕",t:"Good"},
+  {e:"🐬",t:"Very good"},
+  {e:"🦁",t:"Excellent"}
+];
+const COMMON = [
+  {k:"understand",t:"I understood today's lessons."},
+  {k:"practice",t:"The activities let me practice real tutoring situations."},
+  {k:"facilitator",t:"The facilitator explained clearly and answered my questions."},
+  {k:"time",t:"The time was used well."},
+  {k:"venue",t:"The venue, food, and materials were good."},
+  {k:"ready",t:"I feel ready to tutor my learners."}
+];
+/* Edit the day topics here if the program changes. */
+const TOPICS = {
+  1:[
+    {k:"t_rules",t:"I understand the roles, rules, and schedule of an ARAL tutor (DM 001 and DM 061)."},
+    {k:"t_guides",t:"I know how to use the ARAL Math and Reading Tutor's Guides."},
+    {k:"t_records",t:"I know how to record learners' progress (pretest, posttest, and daily log)."}
+  ],
+  2:[
+    {k:"t_a",t:"The first topic today was clear and useful."},
+    {k:"t_b",t:"The second topic today was clear and useful."},
+    {k:"t_c",t:"I can use what I learned today with my learners."}
+  ],
+  3:[
+    {k:"t_a",t:"The first topic today was clear and useful."},
+    {k:"t_b",t:"The second topic today was clear and useful."},
+    {k:"t_c",t:"I can use what I learned today with my learners."}
+  ]
+};
+const $=id=>document.getElementById(id);
+let day=1, who=null, rate={}, lastPayload=null, QS=[];
+
+$("legend").innerHTML=ANIMALS.map(a=>`<div><span>${a.e}</span>${a.t}</div>`).join("");
+function show(id){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));$(id).classList.add("active");window.scrollTo(0,0)}
+DISTRICTS.forEach(m=>{const o=document.createElement("option");o.value=m;o.textContent=m;$("fDist").appendChild(o)});
+(function(){const d=new Date(),m=d.getMonth()+1,dd=d.getDate();if(m===11&&dd>=23&&dd<=25)$("fDay").value=String(dd-22)})();
+
+function fillNames(){
+  const d=$("fDist").value, s=$("fNameSel"); s.innerHTML="";
+  const add=(v,t)=>{const o=document.createElement("option");o.value=v;o.textContent=t;s.appendChild(o)};
+  $("manual").style.display="none";
+  if(!d){add("","Select your district first");s.disabled=true;return}
+  s.disabled=false;add("","Select your name");
+  (ROSTER[d]||[]).forEach(p=>add(p[0],p[0]));
+  add(NOTLISTED,NOTLISTED);
+  if(!ROSTER[d]){s.value=NOTLISTED;nameChosen()}
+}
+function nameChosen(){$("manual").style.display=($("fNameSel").value===NOTLISTED)?"block":"none"}
+$("fDist").onchange=fillNames;$("fNameSel").onchange=nameChosen;
+
+$("homeBtn").onclick=()=>{
+  if($("pgEval").classList.contains("active") && Object.keys(rate).length && !confirm("Leaving now will erase your answers. Go Home?")) return;
+  show("pgHome");
+};
+$("startBtn").onclick=()=>show("pgReg");
+$("regBack").onclick=()=>show("pgHome");
+$("facBtn").onclick=()=>show("pgFac");
+$("facBack").onclick=()=>show("pgHome");
+$("doneHome").onclick=()=>show("pgHome");
+$("evBack").onclick=()=>show("pgReg");
+
+$("regGo").onclick=()=>{
+  const dist=$("fDist").value, sel=$("fNameSel").value; let name;
+  if(!dist){$("regErr").textContent="Please select your district.";return}
+  if(!sel){$("regErr").textContent="Please select your name.";return}
+  if(sel===NOTLISTED){
+    name=$("fName").value.trim().replace(/\s+/g," ");
+    if(name.length<4||!/[A-Za-z]/.test(name)){$("regErr").textContent="Please type your full name.";return}
+  }else name=sel;
+  $("regErr").textContent="";
+  day=Number($("fDay").value);
+  const prev=who; who={name,dist};
+  if(!prev||prev.name!==name||prev.dist!==dist||prev.day!==day){rate={}}
+  who.day=day;
+  buildEval();show("pgEval");
+};
+
+function buildEval(){
+  QS=TOPICS[day].map(q=>Object.assign({tag:"Today's topics"},q)).concat(COMMON.map(q=>Object.assign({tag:"Training"},q)));
+  $("evTitle").textContent="Day "+day+" · "+["Nov 23","Nov 24","Nov 25"][day-1];
+  $("qs").innerHTML="";
+  QS.forEach((q,i)=>{
+    const d=document.createElement("div");d.className="q";
+    d.innerHTML=`<span class="tag">${q.tag}</span><p>${i+1}. ${q.t}</p><div class="an">`+ANIMALS.map((a,j)=>`<button type="button" data-q="${i}" data-v="${j+1}" aria-label="${a.t}">${a.e}<small>${a.t}</small></button>`).join("")+`</div>`;
+    $("qs").appendChild(d);
+  });
+  document.querySelectorAll(".an button").forEach(b=>b.onclick=()=>{
+    const i=b.dataset.q;rate[i]=Number(b.dataset.v);
+    b.parentNode.querySelectorAll("button").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");
+    $("prog").style.width=Math.round(Object.keys(rate).length/QS.length*100)+"%";
+  });
+  ["oneWord","best","help","sugg"].forEach(k=>$(k).value="");
+  $("prog").style.width="0";$("evErr").textContent="";
+}
+
+$("evGo").onclick=()=>{
+  const missing=QS.findIndex((q,i)=>!rate[i]);
+  if(missing>=0){$("evErr").textContent="Please tap an animal for sentence "+(missing+1)+".";document.querySelectorAll(".q")[missing].scrollIntoView({behavior:"smooth",block:"center"});return}
+  const ow=$("oneWord").value.trim();
+  if(!ow){$("evErr").textContent="Please write one word for today.";$("oneWord").focus();return}
+  $("evErr").textContent="";
+  const vals=QS.map((q,i)=>rate[i]);
+  const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+  lastPayload={action:"eval",ts:new Date().toISOString(),day:day,name:who.name,district:who.dist,
+    ratings:vals.join(""),keys:QS.map(q=>q.k).join(","),oneword:ow,best:$("best").value.trim(),help:$("help").value.trim(),sugg:$("sugg").value.trim(),
+    ua:navigator.userAgent.slice(0,120)};
+  const a=ANIMALS[Math.min(4,Math.max(0,Math.round(avg)-1))];
+  $("doneAn").textContent=a.e;
+  $("doneMsg").textContent="Your day feels like a "+a.t.toLowerCase()+" day. See you tomorrow!";
+  show("pgDone");sendEval();
+};
+
+async function sendEval(){
+  const msg=$("saveMsg"),rb=$("retryBtn");rb.style.display="none";
+  if(!APPS_SCRIPT_URL){msg.textContent="Not connected to the database yet.";return}
+  msg.textContent="Saving your answers...";
+  try{
+    const r=await fetch(APPS_SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(lastPayload)});
+    const j=await r.json();
+    if(j&&j.ok){msg.textContent="Saved. Thank you!";rate={}}
+    else if(j&&j.error==="duplicate"){msg.textContent="An evaluation for this name and day was already saved earlier.";rate={}}
+    else{msg.textContent="Could not save. Please try again.";rb.style.display="inline-flex"}
+  }catch(e){msg.textContent="No connection. Please try again.";rb.style.display="inline-flex"}
+}
+$("retryBtn").onclick=sendEval;
+
+$("facGo").onclick=async()=>{
+  const pin=$("facPin").value.trim();$("facErr").textContent="";$("dash").innerHTML="";
+  if(!APPS_SCRIPT_URL){$("facErr").textContent="Not connected to the database yet.";return}
+  try{
+    const r=await fetch(APPS_SCRIPT_URL+"?action=evalresults&pin="+encodeURIComponent(pin));
+    const j=await r.json();
+    if(!j.ok){$("facErr").textContent=j.error==="pin"?"Wrong PIN.":"Could not load.";return}
+    drawDash(j.rows);
+  }catch(e){$("facErr").textContent="Could not load. Check the connection."}
+};
+$("facDay").onchange=()=>{if($("dash").innerHTML)$("facGo").click()};
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function drawDash(all){
+  const fd=Number($("facDay").value);
+  const rows=all.filter(r=>!fd||Number(r.day)===fd);
+  if(!rows.length){$("dash").innerHTML='<div class="note">No evaluations yet.</div>';return}
+  const n=rows.length;
+  const tot=rows.map(r=>{const v=String(r.ratings).split("").map(Number);return v.reduce((a,b)=>a+b,0)/v.length});
+  const avg=tot.reduce((a,b)=>a+b,0)/n;
+  const an=ANIMALS[Math.min(4,Math.max(0,Math.round(avg)-1))];
+  let h='<div class="stat"><div><b>'+n+'</b>Evaluations</div><div><b>'+an.e+' '+avg.toFixed(2)+'</b>Overall (out of 5)</div></div>';
+  // per sentence
+  const text={};Object.values(TOPICS).forEach(a=>a.forEach(q=>{if(!text[q.k])text[q.k]=q.t}));COMMON.forEach(q=>text[q.k]=q.t);
+  const agg={};
+  rows.forEach(r=>{const ks=String(r.keys).split(",");String(r.ratings).split("").forEach((c,i)=>{const k=ks[i];(agg[k]=agg[k]||[]).push(Number(c))})});
+  h+='<h2 style="margin-top:16px">By sentence</h2>';
+  Object.keys(agg).forEach(k=>{
+    const a=agg[k],m=a.reduce((x,y)=>x+y,0)/a.length,an2=ANIMALS[Math.min(4,Math.max(0,Math.round(m)-1))];
+    h+='<div class="bar" style="grid-template-columns:1fr 90px 60px"><span style="font-weight:600">'+esc(text[k]||k)+'</span><div class="t"><i style="width:'+(m/5*100)+'%"></i></div><span>'+an2.e+' '+m.toFixed(1)+'</span></div>';
+  });
+  // words
+  const wc={};rows.forEach(r=>{const w=String(r.oneword).trim().toLowerCase();if(w)wc[w]=(wc[w]||0)+1});
+  h+='<h2 style="margin-top:16px">One word for the day</h2><div class="wc">'+Object.entries(wc).sort((a,b)=>b[1]-a[1]).map(([w,c])=>'<span>'+esc(w)+(c>1?' ×'+c:'')+'</span>').join("")+'</div>';
+  [["best","Best part"],["help","Still need help with"],["sugg","Suggestions"]].forEach(([k,t])=>{
+    const L=rows.map(r=>String(r[k]||"").trim()).filter(Boolean);
+    if(L.length)h+='<h2 style="margin-top:16px">'+t+' ('+L.length+')</h2>'+L.map(x=>'<div class="cm">'+esc(x)+'</div>').join("");
+  });
+  const by={};rows.forEach(r=>by[r.district]=(by[r.district]||0)+1);
+  h+='<h2 style="margin-top:16px">By district</h2><table><tr><th>District</th><th>Count</th></tr>'+Object.entries(by).map(([d,c])=>'<tr><td>'+esc(d)+'</td><td>'+c+'</td></tr>').join("")+'</table>';
+  $("dash").innerHTML=h;
+}
+</script>
+</body>
+</html>

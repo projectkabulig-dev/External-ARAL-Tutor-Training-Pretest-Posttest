@@ -28,7 +28,7 @@ body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;back
 .choice h3{margin:12px 0 4px;font-size:22px}
 .choice p{margin:0 0 14px;color:#33465f;font-size:14.5px}
 .choice .when{display:inline-block;font-size:12px;font-weight:800;padding:4px 11px;border-radius:99px;margin-bottom:12px}
-.choice.a .when{background:#e6f0ff;color:#1f5eff}.choice.b .when{background:#ffe9d6;color:#b35a00}
+.choice.c .when{background:#d9f7ec;color:#04855f}.choice.c:before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,#06d6a0,#118ab2)}.choice.c .go{background:linear-gradient(135deg,#06d6a0,#118ab2)}.choice.a .when{background:#e6f0ff;color:#1f5eff}.choice.b .when{background:#ffe9d6;color:#b35a00}
 .choice.a:before,.choice.b:before{content:"";position:absolute;left:0;right:0;top:0;height:6px}
 .choice.a:before{background:linear-gradient(90deg,#1f5eff,#6a3df0)}.choice.b:before{background:var(--rb)}
 .go{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:#fff;background:var(--grad);padding:11px 18px;border-radius:14px;box-shadow:0 8px 18px rgba(31,94,255,.25)}
@@ -56,6 +56,7 @@ body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;back
     <h2>Which one do you need?</h2>
     <ul class="rules">
       <li><b>Pretest:</b> take it once, on the morning of Day 1. 20 situations, 30 minutes.</li>
+      <li><b>Posttest:</b> take it once, at the end of the training. Same format as the pretest.</li>
       <li><b>End-of-Day Evaluation:</b> answer it at the end of each training day (Day 1, 2, and 3). It takes about 3 minutes.</li>
       <li>For both, you choose your <b>district</b> and your <b>name</b>.</li>
     </ul>
@@ -68,6 +69,13 @@ body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;back
       <h3>Pretest</h3>
       <p>20 real-life tutoring situations that check your 21st century skills.</p>
       <span class="go">Open the pretest →</span>
+    </a>
+    <a class="choice c" href="posttest.html">
+      <div class="ic">🎯</div>
+      <span class="when">End of training</span>
+      <h3>Posttest</h3>
+      <p>The same kind of situations again, to see how much you have grown.</p>
+      <span class="go">Open the posttest →</span>
     </a>
     <a class="choice b" href="evaluation.html">
       <div class="ic">🦁🐬🐢</div>

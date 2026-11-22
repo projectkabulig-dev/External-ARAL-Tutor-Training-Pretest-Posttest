@@ -209,6 +209,7 @@ th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06
 
 <script>
 /* ===== CONFIG ===== */
+const TESTTYPE = "pre";   // "pre" = Pretest, "post" = Posttest
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7kwqgr7QzbdMNjiS5VM-6VPnPekF9XQzPKJGKaAvoCxqqm5yXGiNmldOuYjlSJK4/exec";   // Paste your deployed Google Apps Script Web App URL here (see Code.gs)
 const TEST_MINUTES = 30;
 const ROSTER = {"Alcantara": [["ADELFA FERNANDO MESANA", "San Isidro ES"], ["DHIANNE BHRAINE DELA VEGA", "Alcantara CES"], ["HILBOY GALLOS BANTANG", "Melodias Imperial Sr. NHS"], ["IRISH KRYSCYNTH FALLENA", "Felipe Madali MES"], ["JESSAH BELL TABUNA RAMIREZ", "Tugdan ES"], ["JOSEPH ROLDAN GALICIA", "Calagonsao ES"], ["LANILYN CONEJO GALICIA", "Don Manuel L. Solidum MES"], ["MARIA FELISA MORENTE MAYOR", "Alcantara NHS"]], "Looc": [["CHESKA JOY G. CALAUD", "Crispin Grimares ES"], ["JOVITO P NAZARENO", "Jose M. Solis ES"], ["MA. NICKAELLA R. BONUS", "Gov. Gonzales ES"], ["MERJORY SANTIAGO CLAUD", "Pili ES"], ["NOELLYN GREGORIO CASTILLO", "Manhac ES"], ["SHAYNE ELIZABETH FOS GAA", "Limon Norte ES"], ["SHELLY JOY CANDIDO MANALO", "Punta ES"]], "Odiongan North": [["CARMELINA MIÑEQUE BLAUTA", "Odiongan North CS"], ["CHESKA D. FABABAER", "Libertad ES"], ["DOROTHY JOY BATAN", "Tumingad ES"], ["JEAN SORIANO TEMPLE", "Aurora ES"], ["KIMUEL FETALVERO FADRIQUELA", "Gabawan NHS"], ["STELLA MARIE FAMAT RAMILO", "Canlumay Cultural CS"], ["WEEDEN THEE M. MANATO", "Pato-o IS"]], "Odiongan South": [["ANJELY M. LANZADERAS", "Malilico ES"], ["BEVERLY M. GREGORIO", "Ferrol NHS"], ["CRIS FAMILARA FADRIQUELA", "Anahao IS"], ["IRENE FAMILARA FABELLORE", "Odiongan NHS"], ["MARIA LARBHE MARTINEZ PIJANO", "Mayha NHS"], ["MARY GRACE REYES FAMISAN", "Tubigon ES"], ["MICAH EVAN M. ARSULA", "Odiongan South CES"], ["YLLA MAE GADO LUNZAGAY", "Ferrol CES"]], "San Agustin-Santa Maria-Calatrava": [["JHEMYKA M. MANAS", "Carmen ES"], ["JOANNA SOFIA M. MABASA", "Long Beach ES"], ["JOCEL FAJUTNAO CAUNCA", "Calatrava NHS"], ["JOVELYN ANGELINO ARNAIZ", "Alfredo P. Navarette MS"], ["JUDY VINE D. FILLADO", "Concepcion Norte ES"], ["MARYLYN MANZO", "Esteban Madrona NHS"], ["SHELAH MAE M. GURO", "Bonga ES"]], "San Andres": [["ANGELA FRONDA BANDELARIA", "San Andres CES"], ["ARLENE S. GURO", "Marigondon Sur ES"], ["BELJUN F. MERANO", "Linawan IS"], ["CHRISLYN JOY T. GADON", "Tanagan NHS"], ["DHAILAINE KIEM AUGUIS MANATO", "San Andres NHS"], ["LORNA C. MALONES", "Marigondon Sur ES"], ["MELISA CRUZ FABILA", "Marigondon Norte IS"], ["REDENTOR G. ARNAIZ, JR.", "San Andres Cultural HS"], ["THEODORE CASIMERO GUNTAN", "Matutuna ES"]], "San Jose-Santa Fe": [["ABBY MENDOZA MABUNGA", "Lanas ES"], ["CARENA E. SEVILLA", "Pandan ES"], ["CHRISTINE JOY A. BERNARDO", "Magsaysay ES"], ["CONCEPCION P. SOLIVEN", "Guintigbasan ES"], ["JESSIRIE T. SANTIAGO", "Guinbirayan ES"], ["MA. JESSETTE TANDOG MARCELO", "Lanas ES"], ["MARK JOSEPH MAGCALAYO TAMAYO", "Santa Fe CES"], ["MARY GRACE BALDERA BANGALISAN", "Agripino Armedilla NHS"]]};
@@ -394,7 +395,7 @@ function finish(auto){
     rows.push({n:i+1,s:it.s,pick:a,ok});
   });
   const answers=ITEMS.map((_,i)=>{const pos=st.order.findIndex(o=>o.i===i);return st.ans[pos]===null?"-":"ABCD"[st.ans[pos]]}).join("");
-  lastPayload={action:"submit",ts:new Date().toISOString(),name:st.name,district:st.mun,school:st.school,score,total:ITEMS.length,seconds:used,auto:auto?1:0,skills:skill,answers:answers,itemok:rows.map(r=>r.ok?"1":"0").join(""),ua:navigator.userAgent.slice(0,120)};
+  lastPayload={action:"submit",type:TESTTYPE,ts:new Date().toISOString(),name:st.name,district:st.mun,school:st.school,score,total:ITEMS.length,seconds:used,auto:auto?1:0,skills:skill,answers:answers,itemok:rows.map(r=>r.ok?"1":"0").join(""),ua:navigator.userAgent.slice(0,120)};
   showResult(score,skill,used,auto);
   sendResult();
 }
@@ -443,7 +444,7 @@ $("facGo").onclick=()=>{
   if(!APPS_SCRIPT_URL){$("facErr").textContent="No database connected yet. Paste the Apps Script URL in the page first.";return}
   if(!pin){$("facErr").textContent="Enter the PIN.";return}
   $("facErr").textContent="Loading…";
-  fetch(APPS_SCRIPT_URL+"?action=results&pin="+encodeURIComponent(pin)).then(r=>r.json()).then(j=>{
+  fetch(APPS_SCRIPT_URL+"?action=results&type="+TESTTYPE+"&pin="+encodeURIComponent(pin)).then(r=>r.json()).then(j=>{
     if(!j.ok){$("facErr").textContent=j.error==="pin"?"Wrong PIN.":"Could not load.";return}
     $("facErr").textContent="";drawDash(j.rows);
   }).catch(()=>{$("facErr").textContent="Could not reach the database."});
